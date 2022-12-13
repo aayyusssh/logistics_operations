@@ -1,0 +1,268 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+  <div class="content">
+    <div class="card-columns">
+      <div class = "col-md-18">
+    <form class = "form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+    <input class="btn btn-info btn-simple"  name = "excel" title=".xlsx"s  type="file" >
+    <input class="btn btn-info btn-simple" type="submit" value="ok"> 
+  </form>
+  <form action="{% url 'download' %}" method="post">
+    {% csrf_token %}
+     <button type="submit" name="data" class="btn btn-warning btn-simple" value="LECI Dump">Download results in Excel</button>
+     </form>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> MIS </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " border="1">
+              
+                <thead class=" text-primary">
+                    <!--<th>
+                      Activity (from manual-Vinsum MIS)
+                    </th>
+                    <th>
+                      PAYMENT TYPE (from master)
+                    </th>
+                    <th>
+                      LR no.
+                    </th>
+                    <th>
+                      LR dt.
+                    </th>
+                    <th>
+                      Consignor
+                    </th>
+                    <th>
+                      Consignee
+                    </th>
+                    <th>
+                      Consignor Loaction
+                    </th>
+                    <th>
+                      Location Code
+                    </th>
+                    <th>
+                      State
+                    </th>
+                    <th>
+                      Activity Status
+                    </th>
+                    <th>
+                      Location
+                    </th>
+                    <th>
+                      Delivery Date
+                    </th>
+                    <th>
+                      Grn Number
+                    </th>
+                    <th>
+                      Invoice No.
+                    </th>
+                    <th>
+                      Invoice Date
+                    </th>
+                    <th>
+                      Vendor PO No
+                    </th>
+                    <th>
+                      Part No.
+                    </th>
+                    <th>
+                      PKG
+                    </th>
+                    <th>
+                      PKG TYPE
+                    </th>
+                    <th>
+                      Qty.
+                    </th>
+                    <th>
+                      Actual Wt. (KG)
+                    </th>
+                    <th>
+                      LSP Name
+                    </th>
+                    <th>
+                      Inco-Terms
+                    </th>
+                    <th>
+                      GRN Part No
+                    </th>
+                    <th>
+                      GRN Invoice No
+                    </th>
+                    <th>
+                      MB02 Qty.
+                    </th>
+                    <th>
+                      Remark
+                    </th>
+                    <th>
+                      Weight/Part
+                    </th>
+                    <th>
+                      Consider Weight
+                    </th>
+                    <th>
+                      Rate
+                    </th>
+                    <th>
+                      Amount
+                    </th>
+                    <th>
+                      Bill No.
+                    </th>
+                    <th>
+                      Bill Date
+                    </th>
+                    <th>
+                      SES No.
+                    </th>
+                    <th>
+                      SES Dt.
+                    </th>
+                    <th>
+                      2nd Rel. Dt.
+                    </th>
+                    <th>
+                      SES Status
+                    </th>
+                    <th>
+                      SVPS Status (27th Dec-21)
+                    </th>-->
+                    
+                    <tr>
+                      {% for x in col %}
+                    <td>
+                      {{x}}
+                    </td>
+                    {% endfor %}
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in inbound %}
+                    <td>
+                      {{x.invoiceid}}
+                    </td>
+                    <td>
+                      {{x.invoiceno}}
+                    </td>
+                    <td>
+                      {{x.invoicedate}}
+                    </td>
+                    <td>
+                      {{x.uploadeddate}}
+                    </td>
+                    <td>
+                        {{x.vendorcode}}
+                      </td>
+                      <td>
+                        {{x.vendorname}}
+                      </td>
+                      <td>
+                        {{x.currentstatus}}
+                      </td>
+                      <td>
+                        {{x.ponumber}}
+                      </td>
+                      <td>
+                        {{x.signedby}}
+                      </td>
+                      <td>
+                        {{x.isverified}}
+                      </td>
+                      <td>
+                        {{x.signtimestamp}}
+                      </td>
+                      <td>
+                        {{x.email}}
+                      </td>
+                      <td>
+                        {{x.plantcode}}
+                      </td>
+                      <td>
+                        {{x.plantname}}
+                      </td>
+                      <td>
+                        {{x.shipmentcode}}
+                      </td>
+                      <td>
+                        {{x.rmsrefnumber}}
+                      </td>
+                      <td>
+                        {{x.invoiceamount}}
+                      </td>
+                      <td>
+                        {{x.uaremark}}
+                      </td>
+                      <td>
+                        {{x.gdcremark}}
+                      </td>
+                      <td>
+                        {{x.rejectedbygdc}}
+                      </td>
+                      <td>
+                        {{x.shipmentno}}
+                      </td>
+                      <td>
+                        {{x.sesno}}
+                      </td>
+                      <td>
+                        {{x.shipmentcostingno}}
+                      </td>
+                      <td>
+                        {{x.shipmentdate}}
+                      </td>
+                      <td>
+                        {{x.shipmentstatus}}
+                      </td>
+                      <td>
+                        {{x.shipmentcostingstatus}}
+                      </td>
+                      <td>
+                        {{x.mrrlrunstatus}}
+                      </td>
+                      <td>
+                        {{x.basicfreightcharges}}
+                      </td>
+                      <td>
+                        {{x.discountamount}}
+                      </td>
+                      <td>
+                        {{x.gstamount}}
+                      </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,273 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+  <div class="content">
+    <div class="card-columns">
+      <div class = "col-md-18">
+    
+  
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <!-- .Launch Modal Button-->
+          <button type="button" class="btn btn-primary float-left" data-toggle="modal" data-target="#Mymodal">
+            Upload
+          </button>
+        
+          <!-- .modal -->
+          <div class="modal fade" id="Mymodal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    ×
+                  </button> 
+                  <h4 class="modal-title">
+                    Upload Box
+                  </h4>                                                             
+                </div> 
+                <div class="modal-body">
+                  <form class = "form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                  <input class="btn btn-info btn-simple"  name = "excel" title=".xlsx"s type="file">
+                  
+                </div>
+                <div class="modal-footer">
+                  <input class="btn btn-success" type="submit" value="append data" name="append">
+                  <input class="btn btn-danger" type="submit" value="replace data" name="replace">  
+                </form>                          
+                </div>
+              </div>                                                                       
+            </div>                                      
+          </div>
+          <form action="{% url 'download' %}" method="post">
+            {% csrf_token %}
+             <button type="submit" name="data" class="btn btn-warning btn-simple float-right" value="Grn Dump">Download results in Excel</button>
+             </form>
+        </div>
+        
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> MIS </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " border="1">
+              
+                <thead class=" text-primary">
+                    <!--<th>
+                      Activity (from manual-Vinsum MIS)
+                    </th>
+                    <th>
+                      PAYMENT TYPE (from master)
+                    </th>
+                    <th>
+                      LR no.
+                    </th>
+                    <th>
+                      LR dt.
+                    </th>
+                    <th>
+                      Consignor
+                    </th>
+                    <th>
+                      Consignee
+                    </th>
+                    <th>
+                      Consignor Loaction
+                    </th>
+                    <th>
+                      Location Code
+                    </th>
+                    <th>
+                      State
+                    </th>
+                    <th>
+                      Activity Status
+                    </th>
+                    <th>
+                      Location
+                    </th>
+                    <th>
+                      Delivery Date
+                    </th>
+                    <th>
+                      Grn Number
+                    </th>
+                    <th>
+                      Invoice No.
+                    </th>
+                    <th>
+                      Invoice Date
+                    </th>
+                    <th>
+                      Vendor PO No
+                    </th>
+                    <th>
+                      Part No.
+                    </th>
+                    <th>
+                      PKG
+                    </th>
+                    <th>
+                      PKG TYPE
+                    </th>
+                    <th>
+                      Qty.
+                    </th>
+                    <th>
+                      Actual Wt. (KG)
+                    </th>
+                    <th>
+                      LSP Name
+                    </th>
+                    <th>
+                      Inco-Terms
+                    </th>
+                    <th>
+                      GRN Part No
+                    </th>
+                    <th>
+                      GRN Invoice No
+                    </th>
+                    <th>
+                      MB02 Qty.
+                    </th>
+                    <th>
+                      Remark
+                    </th>
+                    <th>
+                      Weight/Part
+                    </th>
+                    <th>
+                      Consider Weight
+                    </th>
+                    <th>
+                      Rate
+                    </th>
+                    <th>
+                      Amount
+                    </th>
+                    <th>
+                      Bill No.
+                    </th>
+                    <th>
+                      Bill Date
+                    </th>
+                    <th>
+                      SES No.
+                    </th>
+                    <th>
+                      SES Dt.
+                    </th>
+                    <th>
+                      2nd Rel. Dt.
+                    </th>
+                    <th>
+                      SES Status
+                    </th>
+                    <th>
+                      SVPS Status (27th Dec-21)
+                    </th>-->
+                    
+                    <tr>
+                      {% for x in col %}
+                    <td>
+                      {{x}}
+                    </td>
+                    {% endfor %}
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in Grn %}
+                    <td>
+                      {{x.materialdocument}}
+                    </td>
+                    <td>
+                      {{x.material}}
+                    </td>
+                    <td>
+                      {{x.materialdescription}}
+                    </td>
+                    <td>
+                      {{x.reference}}
+                    </td>
+                    <td>
+                      {{x.inv_dt_field}}
+                    </td>
+                    <td class ="text-center">
+                      {{x.grqty_field}}
+                    </td>
+                    <td>
+                      {{x.mb02qty_field}}
+                    </td>
+                    <td>
+                      {{x.mov}}
+                    </td>
+                    <td>
+                      {{x.strloc_field}}
+                    </td>
+                    <td>
+                      {{x.leci}}
+                    </td>
+                    <td>
+                      {{x.purchaseorder}}
+                    </td>
+                    <td>
+                      {{x.vendor}}
+                    </td>
+                    <td>
+                      {{x.postingdate}}
+                    </td>
+                    <td>
+                      {{x.plant}}
+                    </td>
+                    <td>
+                      {{x.grnamount}}
+                    </td>
+                    <td>
+                      {{x.vendorname}}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <div class="pagination">
+                <span class="step-links">
+                    {% if Grn.has_previous %}
+                        <a href="/tables/grn?page=1">&laquo; first</a>
+                        <a href="/tables/grn?page={{ Grn.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ Grn.number }} of {{ Grn.paginator.num_pages }}.
+                    </span>
+            
+                    {% if Grn.has_next %}
+                        <a href="/tables/grn?page={{ Grn.next_page_number }}">next</a>
+                        <a href="/tables/grn?page={{ Grn.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

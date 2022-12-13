@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+{% block title %} Update Table {% endblock %}
+{% block stylesheets %}
+<style>
+    ul{
+        display:inline-block;
+    }
+</style>
+{% endblock stylesheets %}
+{% block content %}
+
+{% for x in mymis %}
+<ul class="content">
+    <div class="row">
+        <div class="col-md-12">
+<form class="form" action="updaterecord/{{ x.invoiceno_field }}" method="post">
+   
+    {% csrf_token %}
+    Invoic No.
+    <input class="form-control" type="text" name="invoiceno_field" value="{{ x.invoiceno_field }}">
+    <br>
+    Transporter Name
+    <input class="form-control" type="text" name="transportername" value="{{ x.transportername }}">
+    <br>
+    Activity (From Manual-Vinsum MIS)
+    <input class="form-control" type="text" name="activity_frommanual_vinsummis_field" value="{{ x.activity_frommanual_vinsummis_field }}">
+    <br>
+    PAYMENT TYPE (from master)
+    <input class="form-control" type="text" name="paymenttype_frommaster_field" value="{{ x.paymenttype_frommaster_field }}">
+    <br>
+    Activity Status
+    <input class="form-control" type="text" name="activitystatus" value="{{ x.activitystatus }}">
+    <br>
+    Location
+    <input class="form-control" type="text" name="location" value="{{ x.location }}">
+    <br>
+    Delivery Date
+    <input class="form-control" type="text" name="deliverydate" value="{{ x.deliverydate }}">
+    <br>
+    Grn Number
+    <input class="form-control" type="number" name="grnnumber" value="{{ x.grnnumber }}">
+    <br>
+    LR no.
+    <input class="form-control" type="number" name="lrno_field" value="{{ x.lrno_field }}">
+    <br>
+    LR Dt.
+    <input class="form-control" type="text" name="lrdt_field" value="{{ x.lrdt_field }}">
+    <br>
+    LR Time
+    <input class="form-control" type="time" name="lrtime" value="{{ x.lrtime }}">
+    <br>
+    Consignor
+    <input class="form-control" type="text" name="consignor" value="{{ x.consignor }}">
+    <br>
+    Consignee
+    <input class="form-control" type="text" name="consignee" value="{{ x.consignee }}">
+    <br>
+    Consignor Location
+    <input class="form-control" type="text" name="consignorlocation" value="{{ x.consignorlocation }}">
+    <br>
+    Location Code
+    <input class="form-control" type="text" name="locationcode" value="{{ x.locationcode }}">
+    <br>
+    State
+    <input class="form-control" type="text" name="state" value="{{ x.state }}">
+    <br>
+    Invoice Date
+    <input class="form-control" type="text" name="invoicedate" value="{{ x.invoicedate }}">
+    <br>
+    Vendor PO No
+    <input class="form-control" type="number" name="vendorpono" value="{{ x.vendorpono }}">
+    <br>
+    Part No
+    <input class="form-control" type="number" name="partno_field" value="{{ x.partno_field }}">
+    <br>
+    PKG
+    <input class="form-control" type="number" name="pkg" value="{{ x.pkg }}">
+    <br>
+    PKG TYPE
+    <input class="form-control" type="text" name="pkgtype" value="{{ x.pkgtype }}">
+    <br>
+    Qty.
+    <input class="form-control" type="number" name="qty_field" value="{{ x.qty_field }}">
+    <br>
+    Actual Wt. (KG)
+    <input class="form-control" type="number" name="actualwt_kg_field" value="{{ x.actualwt_kg_field }}">
+    <br>
+    <br>
+    <input class="btn" type="submit" value="Submit">
+    
+    </form>
+</div>
+</div>
+</ul>
+    {% endfor %}
+
+    {% endblock content %}
+
+   

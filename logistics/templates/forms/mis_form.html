@@ -1,0 +1,28 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} manage mis {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="content">
+    <form method="POST">
+      <fieldset>
+        <legend>Form</legend>
+        <div class="card-body">
+        <table class="table tablesorter " border="1" >
+        {% csrf_token %}
+        <textarea></textarea>
+        </table>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+      </fieldset>
+    </form>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %} {% endblock javascripts %}

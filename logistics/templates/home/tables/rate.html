@@ -1,0 +1,230 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+  <div class="content">
+    <div class="card-columns">
+      <div class = "col-md-18">
+    <form class = "form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+    <input class="btn btn-info btn-simple"  name = "excel" title=".xlsx"s  type="file" >
+    <input class="btn btn-info btn-simple" type="submit" value="ok"> 
+  </form>
+  <form action="{% url 'download' %}" method="post">
+    {% csrf_token %}
+     <button type="submit" name="data" class="btn btn-warning btn-simple" value="Fast Dump">Download results in Excel</button>
+     </form>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> MIS </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " border="1">
+              
+                <thead class=" text-primary">
+                    <!--<th>
+                      Activity (from manual-Vinsum MIS)
+                    </th>
+                    <th>
+                      PAYMENT TYPE (from master)
+                    </th>
+                    <th>
+                      LR no.
+                    </th>
+                    <th>
+                      LR dt.
+                    </th>
+                    <th>
+                      Consignor
+                    </th>
+                    <th>
+                      Consignee
+                    </th>
+                    <th>
+                      Consignor Loaction
+                    </th>
+                    <th>
+                      Location Code
+                    </th>
+                    <th>
+                      State
+                    </th>
+                    <th>
+                      Activity Status
+                    </th>
+                    <th>
+                      Location
+                    </th>
+                    <th>
+                      Delivery Date
+                    </th>
+                    <th>
+                      Grn Number
+                    </th>
+                    <th>
+                      Invoice No.
+                    </th>
+                    <th>
+                      Invoice Date
+                    </th>
+                    <th>
+                      Vendor PO No
+                    </th>
+                    <th>
+                      Part No.
+                    </th>
+                    <th>
+                      PKG
+                    </th>
+                    <th>
+                      PKG TYPE
+                    </th>
+                    <th>
+                      Qty.
+                    </th>
+                    <th>
+                      Actual Wt. (KG)
+                    </th>
+                    <th>
+                      LSP Name
+                    </th>
+                    <th>
+                      Inco-Terms
+                    </th>
+                    <th>
+                      GRN Part No
+                    </th>
+                    <th>
+                      GRN Invoice No
+                    </th>
+                    <th>
+                      MB02 Qty.
+                    </th>
+                    <th>
+                      Remark
+                    </th>
+                    <th>
+                      Weight/Part
+                    </th>
+                    <th>
+                      Consider Weight
+                    </th>
+                    <th>
+                      Rate
+                    </th>
+                    <th>
+                      Amount
+                    </th>
+                    <th>
+                      Bill No.
+                    </th>
+                    <th>
+                      Bill Date
+                    </th>
+                    <th>
+                      SES No.
+                    </th>
+                    <th>
+                      SES Dt.
+                    </th>
+                    <th>
+                      2nd Rel. Dt.
+                    </th>
+                    <th>
+                      SES Status
+                    </th>
+                    <th>
+                      SVPS Status (27th Dec-21)
+                    </th>-->
+                    
+                    <tr>
+                      {% for x in col %}
+                    <td>
+                      {{x}}
+                    </td>
+                    {% endfor %}
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in distancerange %}
+                    <td>
+                      {{x.vendor_code_field}}
+                    </td>
+                    <td>
+                      {{x.vendor}}
+                    </td>
+                    <td>
+                      {{x.city}}
+                    </td>
+                    <td>
+                      {{x.consider_city}}
+                    </td>
+                    <td>
+                        {{x.state}}
+                      </td>
+                      <td>
+                        {{x.zone_for_air_train}}
+                      </td>
+                      <td>
+                        {{x.distance_from_utk_to_vendor_consider_city_distance_check_from_google_field}}
+                      </td>
+                      <td>
+                        {{x.distance_for_speed_truck}}
+                      </td>
+                      <td>
+                        {{x.nearest_airport}}
+                      </td>
+                      <td>
+                        {{x.distance_from_pick_up_location_to_airport}}
+                      </td>
+                      <td>
+                        {{x.nearest_railway_station}}
+                      </td>
+                      <td>
+                        {{x.distance_from_pick_up_location_to_railway_station}}
+                      </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <div class="pagination">
+                <span class="step-links">
+                    {% if ses.has_previous %}
+                        <a href="/ses?page=1">&laquo; first</a>
+                        <a href="/ses?page={{ ses.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ ses.number }} of {{ ses.paginator.num_pages }}.
+                    </span>
+            
+                    {% if ses.has_next %}
+                        <a href="/ses?page={{ ses.next_page_number }}">next</a>
+                        <a href="/ses?page={{ ses.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}               

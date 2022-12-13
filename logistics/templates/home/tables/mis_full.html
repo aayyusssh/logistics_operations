@@ -1,0 +1,719 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+  }
+  
+  .pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+
+#nav {
+    width: 22em;
+    height: 20em;
+    line-height: 2em;
+    border: 1px solid #ccc;
+    padding: 0;
+    margin: 0;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+li {
+    border-top: 1px solid #ccc;
+}
+
+ul ul {
+    text-indent: 1em;
+}
+
+ul ul ul {
+    text-indent: 2em;
+}
+.dropbtn {
+  background-color: #6d6f62;
+  color: rgb(255, 255, 255);
+  padding: 2px;
+  font-size: 16px;
+  border: none;
+  border-style: inset;
+
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+  </style>
+     {% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="card-columns">
+      <div class = "col-md-18">
+    <div class="container">
+      <!-- .Launch Modal Button-->
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Mymodal">
+        Update Table
+      </button>
+    
+      <!-- .modal -->
+      <div class="modal fade" id="Mymodal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                ×
+              </button> 
+              <h4 class="modal-title">
+                Notification
+              </h4>                                                             
+            </div> 
+            <div class="modal-body">
+              Choose your option!!!
+            </div>   
+            <div class="modal-body">
+              <form action="#" method="get" >
+                <input class="btn btn-success" type="submit" name="update_btn" value="update after re-upload">
+                <input class="btn btn-success" type="submit" name="match" value="Match From Grn Dump"> 
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Close
+              </button>                              
+            </div>
+          </div>                                                                       
+        </div>                                      
+      </div>
+    </div> 
+    <div class="container">
+      <!-- .Launch Modal Button-->
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#Mymodal3">
+        Search
+      </button>
+    
+      <!-- .modal -->
+      <div class="modal fade" id="Mymodal3">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                ×
+              </button> 
+              <h4 class="modal-title">
+                Notification
+              </h4>                                                             
+            </div> 
+            <div class="modal-body">
+              Choose your option!!!
+            </div>   
+            <div class="modal-body">
+              <form action="#" method="get" >
+                <input type="text" name="searchdata"><br>
+                <input class="btn btn-success" type="submit" name="billno" value="billno">
+                <input class="btn btn-success" type="submit" name="partno" value="partno">
+                <br>
+                <input class="btn btn-success" type="submit" name="lrno" value="lrno">
+                <input class="btn btn-success" type="submit" name="invno" value="invno">
+                
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">
+                Close
+              </button>                              
+            </div>
+          </div>                                                                       
+        </div>                                      
+      </div>
+    </div> 
+    <div class="container">
+      <!-- .Launch Modal Button-->
+      <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#Mymodal2">
+        Download
+      </button>
+    
+      <!-- .modal -->
+      <div class="modal fade" id="Mymodal2">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                ×
+              </button> 
+              <h4 class="modal-title">
+                Notification
+              </h4>                                                             
+            </div> 
+            <div class="modal-body">
+              Are you sure you want to download?
+            </div>   
+            <div class="modal-footer">
+              <form action="{% url 'download' %}" method="post">
+                {% csrf_token %}
+                 <button type="submit" class="btn btn-success" name="data" value="MIS">Yes</button>
+                 </form>
+              <button type="button" class="btn btn-warning" data-dismiss="modal">
+                Close
+              </button>                                
+            </div>
+          </div>                                                                       
+        </div>                                      
+      </div>
+    </div>
+  
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        
+      {% if messages %}
+<div class="alert">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</div>
+{% endif %}
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> MIS </h4>
+          </div>
+          <div class="card-body">
+            <div class="dropdown">
+              <button class="dropbtn">Select Column</button>
+              <div class="dropdown-content">
+                <ul id="nav" class="items">
+                  <li>
+                    <input type="checkbox" id="transporter_code_col"  value="hide" onchange="hide_show_table(this.id);" checked >Transporter Code
+                  </li>
+                  <li>
+                    <input type="checkbox" id="transporter_name_col"  value="hide" onchange="hide_show_table(this.id);" checked>Transporter Name
+                  </li>
+                  <li>
+                    <input type="checkbox" id="activity_from_col"  value="hide" onchange="hide_show_table(this.id);" checked>Activity (from manual-Vinsum MIS)
+                  </li>
+                  <li>
+                    <input type="checkbox" id="payment_type_from_master_col"  value="hide" onchange="hide_show_table(this.id);" checked>PAYMENT TYPE (from master)
+                  </li>
+                  <li>
+                    <input type="checkbox" id="activity_status_col"  value="hide" onchange="hide_show_table(this.id);" checked>Activity Status
+                  </li>
+                    <li>
+                      <input type="checkbox" id="location_col"  value="hide" onchange="hide_show_table(this.id);" checked>Location
+                    </li>
+                    <li>
+                      <input type="checkbox" id="ses_no_col"  value="hide" onchange="hide_show_table(this.id);" checked>SES No
+                    </li>
+                    <li>
+                      <input type="checkbox" id="delivery_date_col"  value="hide" onchange="hide_show_table(this.id);" checked>Delivery Date
+                    </li>
+                    <li>
+                      <input type="checkbox" id="grn_number_col"  value="hide" onchange="hide_show_table(this.id);" checked>Grn Number
+                    </li>
+                    <li>
+                      <input type="checkbox" id="lr_no_col"  value="hide" onchange="hide_show_table(this.id);" checked>LR no.
+                    </li>
+                    <li>
+                      <input type="checkbox" id="lr_dt_col"  value="hide" onchange="hide_show_table(this.id);" checked>LR dt.
+                    </li>
+                    <li>
+                      <input type="checkbox" id="lr_time_col"  value="hide" onchange="hide_show_table(this.id);" checked>LR Time
+                    </li>
+                    <li>
+                      <input type="checkbox" id="consignor_col"  value="hide" onchange="hide_show_table(this.id);" checked>Consignor
+                    </li>
+                    <li>
+                      <input type="checkbox" id="ses_date_col"  value="hide" onchange="hide_show_table(this.id);" checked>SES Date
+                    </li>
+              
+                  
+                    <li>
+                      <input type="checkbox" id="consignee_col"  value="hide" onchange="hide_show_table(this.id);" checked>Consignee
+                    </li>
+                    <li>
+                      <input type="checkbox" id="consignor_location_col"  value="hide" onchange="hide_show_table(this.id);" checked>Consignor Location
+                    </li>
+                    <li>
+                      <input type="checkbox" id="location_code_col"  value="hide" onchange="hide_show_table(this.id);" checked>Location Code
+                    </li>
+                    <li>
+                      <input type="checkbox" id="state_col"  value="hide" onchange="hide_show_table(this.id);" checked>State
+                    </li>
+                    <li>
+                      <input type="checkbox" id="invoice_no_col"  value="hide" onchange="hide_show_table(this.id);" checked>Invoice No.
+                    </li>
+                    <li>
+                      <input type="checkbox" id="invoice_date_col"  value="hide" onchange="hide_show_table(this.id);" checked>Invoice Date
+                    </li>
+                    <li>
+                      <input type="checkbox" id="2nd_rel_col"  value="hide" onchange="hide_show_table(this.id);" checked>2nd Rel
+                    </li>
+              
+                  
+                    <li>
+                      <input type="checkbox" id="vendor_po_no_col"  value="hide" onchange="hide_show_table(this.id);" checked>Vendor PO No
+                    </li>
+                    <li>
+                      <input type="checkbox" id="part_no_col"  value="hide" onchange="hide_show_table(this.id);" checked>Part No.
+                    </li>
+                    <li>
+                      <input type="checkbox" id="pkg_col"  value="hide" onchange="hide_show_table(this.id);" checked>PKG
+                    </li>
+                    <li>
+                      <input type="checkbox" id="pkg_type_col"  value="hide" onchange="hide_show_table(this.id);" checked>PKG TYPE
+                    </li>
+                    <li>
+                      <input type="checkbox" id="qty_col"  value="hide" onchange="hide_show_table(this.id);" checked>Qty.
+                    </li>
+                    <li>
+                      <input type="checkbox" id="actual_wt_kg_col"  value="hide" onchange="hide_show_table(this.id);" checked>Actual Wt. (KG)
+                    </li>
+                    <li>
+                      <input type="checkbox" id="ses_status_col"  value="hide" onchange="hide_show_table(this.id);" checked>SES Status
+                    </li>
+                  
+                  
+                    <li>
+                      <input type="checkbox" id="transporter_col"  value="hide" onchange="hide_show_table(this.id);" checked>Transporter
+                    </li>
+                    <li>
+                      <input type="checkbox" id="material_col"  value="hide" onchange="hide_show_table(this.id);" checked>Material
+                    </li>
+                    <li>
+                      <input type="checkbox" id="reference_col"  value="hide" onchange="hide_show_table(this.id);" checked>Reference
+                    </li>
+                    <li>
+                      <input type="checkbox" id="mb02_qty_col"  value="hide" onchange="hide_show_table(this.id);" checked>MB02 Qty.
+                    </li>
+                    <li>
+                      <input type="checkbox" id="inco_terms_col"  value="hide" onchange="hide_show_table(this.id);" checked>Inco-Terms
+                    </li>
+                    <li>
+                      <input type="checkbox" id="weight_part_col"  value="hide" onchange="hide_show_table(this.id);" checked>Weight/Part
+                    </li>
+                    <li>
+                      <input type="checkbox" id="rate_col"  value="hide" onchange="hide_show_table(this.id);" checked>Rate
+                    </li>
+                    
+                  <li>
+                    <input type="checkbox" id="state_description_col"  value="hide" onchange="hide_show_table(this.id);" checked>State Description
+                  </li>
+                  <li>
+                    <input type="checkbox" id="consider_weight_col"  value="hide" onchange="hide_show_table(this.id);" checked>Consider Weight (Provision)
+                  </li>
+                  <li>
+                    <input type="checkbox" id="billing_weight_col"  value="hide" onchange="hide_show_table(this.id);" checked>Billing Weight
+                  </li>
+                  <li>
+                    <input type="checkbox" id="consider_value_col"  value="hide" onchange="hide_show_table(this.id);" checked>Consider Value (Provision)
+                  </li>
+                  <li>
+                    <input type="checkbox" id="billing_value_col"  value="hide" onchange="hide_show_table(this.id);" checked>Billing Value
+                  </li>
+                  <li>
+                    <input type="checkbox" id="bill_no_col"  value="hide" onchange="hide_show_table(this.id);" checked>Bill No
+                  </li>
+                  <li>
+                    <input type="checkbox" id="bill_status_col"  value="hide" onchange="hide_show_table(this.id);" checked>Bill Status
+                  </li>
+                  </ul>
+              </div>
+            </div>
+            
+            
+            <div class="table-responsive">
+              <table id="data" class="table tablesorter " border="1">
+                
+                <thead  class=" text-primary">
+                  <tr>
+                    <td id="transporter_code_col_head" style="background-color: yellow; color: black">
+                      Transporter Code
+                    </td>
+                    <td id = "transporter_name_col_head" style="background-color: yellow; color: black">
+                      Transporter Name
+                    </td>
+                    <td id="activity_from_col_head" style="background-color: yellow; color: black">
+                      Activity (from manual-Vinsum MIS)
+                    </td>
+                    <td id="payment_type_from_master_col_head" style="background-color: yellow; color: black">
+                      PAYMENT TYPE (from master)
+                    </td>
+                    <td id="activity_status_col_head" style="background-color: yellow; color: black">
+                      Activity Status
+                    </td>
+                    <td id = "location_col_head" style="background-color: yellow; color: black">
+                      Location
+                    </td>
+                    <td id="delivery_date_col_head" style="background-color: yellow; color: black">
+                      Delivery Date
+                    </td>
+                    <td id="grn_number_col_head" style="background-color: yellow; color: black">
+                      Grn Number
+                    </td>
+                    <td id="lr_no_col_head" style="background-color: yellow; color: black">
+                      LR no.
+                    </td>
+                    <td id="lr_dt_col_head" style="background-color: yellow; color: black">
+                      LR dt.
+                    </td>
+                    <td id="lr_time_col_head" style="background-color: yellow; color: black">
+                      LR Time
+                    </td>
+                    <td id="consignor_col_head" style="background-color: yellow; color: black">
+                      Consignor
+                    </td>
+                    <td id="consignee_col_head" style="background-color: yellow; color: black">
+                      Consignee
+                    </td>
+                    <td id="consignor_location_col_head" style="background-color: yellow; color: black">
+                      Consignor Location
+                    </td>
+                    <td id="location_code_col_head" style="background-color: yellow; color: black">
+                      Location Code
+                    </td>
+                    <td id="state_col_head" style="background-color: yellow; color: black">
+                      State
+                    </td>
+                    <td id="invoice_no_col_head" style="background-color: yellow; color: black">
+                      Invoice No.
+                    </td>
+                    <td id="invoice_date_col_head" style="background-color: yellow; color: black">
+                      Invoice Date
+                    </td>
+                    <td id="vendor_po_no_col_head" style="background-color: yellow; color: black">
+                      Vendor PO No
+                    </td>
+                    <td id="part_no_col_head" style="background-color: yellow; color: black">
+                      Part No.
+                    </td>
+                    <td id="pkg_col_head" style="background-color: yellow; color: black">
+                      PKG
+                    </td>
+                    <td id="pkg_type_col_head" style="background-color: yellow; color: black">
+                      PKG TYPE
+                    </td>
+                    <td id="qty_col_head" style="background-color: yellow; color: black">
+                      Qty.
+                    </td>
+                    <td id="actual_wt_kg_col_head" style="background-color: yellow; color: black">
+                      Actual Wt. (KG)
+                    </td>
+                    <td id="transporter_col_head" style="background-color: lawngreen; color: black;">
+                      Transporter
+                    </td>
+                    <td id="material_col_head" style="background-color: lawngreen; color: black;">
+                      Material
+                    </td>
+                    <td id="reference_col_head" style="background-color: lawngreen; color: black;">
+                      Reference
+                    </td >
+                    <td id="mb02_qty_col_head" style="background-color: lawngreen; color: black;">
+                      MB02 Qty.
+                    </td>
+                    <td id="inco_terms_col_head" style="background-color: lawngreen; color: black;">
+                      Inco Terms
+                    </td>
+                    <td id="state_description_col_head" style="background-color: lawngreen; color: black;">
+                      State Description
+                    </td>
+                    <td id="weight_part_col_head" style="background-color: lawngreen; color: black;">
+                      Weight/Part
+                    </td>
+                    <td id="rate_col_head" style="background-color: lawngreen; color: black;">
+                      Rate
+                    </td>
+                    <td id="consider_weight_col_head" style="background-color: lawngreen; color: black;">
+                      Consider Weight (Provision)
+                    </td>
+                    <td id="billing_weight_col_head" style="background-color: lawngreen; color: black;">
+                      Billing Weight
+                    </td>
+                    <td id="consider_value_col_head" style="background-color: lawngreen; color: black;">
+                      Consider Value  (Provision)
+                    </td>
+                    <td id="billing_value_col_head" style="background-color: lawngreen; color: black;">
+                      Billing Value 
+                    </td>
+                    <td id="bill_no_col_head" style="background-color: lawngreen; color: black;">
+                      Bill No.
+                    </td>
+                    <td id="bill_status_col_head" style="background-color: lawngreen; color: black;">
+                      Bill Status
+                    </td>
+                    <td id="ses_no_col_head" style="background-color: lawngreen; color: black;">
+                      SES No
+                    </td>
+                    <td id="ses_date_col_head" style="background-color: lawngreen; color: black;">
+                      SES Date
+                    </td>
+                    <td id="2nd_rel_col_head" style="background-color: lawngreen; color: black;">
+                      2nd Rel
+                    </td>
+                    <td id="ses_status_col_head" style="background-color: lawngreen; color: black;">
+                      SES Status
+                    </td>
+                  </tr>
+                   
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in mis %}
+                    <td class="transporter_code_col">
+                      {{x.lsp_code}}
+                      
+                    </td>
+                    <td class="transporter_name_col">
+                      {{x.transporter_name}}
+                      
+                    </td>
+                    <td class="activity_from_col">
+                      {{x.activity_from_manual_vinsum_mis_field}}
+                    </td>
+                    <td class="payment_type_from_master_col">
+                      {{x.payment_type_from_master_field}}
+                    </td>
+                    <td class="activity_status_col">
+                      {{x.activity_status}}
+                    </td>
+                    <td class="location_col">
+                      {{x.location}}
+                    </td>
+                    <td class ="delivery_date_col">
+                      {{x.delivery_date}}
+                    </td>
+                    <td class="grn_number_col">
+                      <a href="show_leci/{{x.grn_number}}">{{x.grn_number}}</a>
+                      
+                    </td>
+                    <td class="lr_no_col">
+                      {{x.lr_no_field}}
+                    </td>
+                    <td class="lr_dt_col">
+                      {{x.lr_dt_field}}
+                    </td>
+                    <td class="lr_time_col">
+                      {{x.lr_time}}
+                    </td>
+                    <td class="consignor_col">
+                      {{x.consignor}}
+                    </td>
+                    <td class="consignee_col">
+                      {{x.consignee}}
+                    </td>
+                    <td class="consignor_location_col">
+                      {{x.consignor_location}}
+                    </td>
+                    <td class="location_code_col">
+                      {{x.location_code}}
+                    </td>
+                    <td class="state_col">
+                      {{x.state}}
+                    </td>
+                    <td class="invoice_no_col">
+                      {{x.invoice_no_field}}
+                    </td>
+                    <td class="invoice_date_col">
+                      {{x.invoice_date}}
+                    </td>
+                    <td class="vendor_po_no_col">
+                      {{x.vendor_po_no}}
+                    </td>
+                    <td class="part_no_col">
+                      {{x.part_no_field}}
+                    </td>
+                    <td class="pkg_col">
+                      {{x.pkg}}
+                    </td>
+                    <td class="pkg_type_col">
+                      {{x.pkg_type}}
+                    </td>
+                    <td class="qty_col">
+                      {{x.qty_field}}
+                    </td>
+                    <td class="actual_wt_kg_col">
+                      {{x.actual_wt_kg_field}}
+                    </td>
+                    <td class="transporter_col">
+                      {{x.transporter}}
+                    </td>                    
+                    {% if x.part_no_field != x.material %}
+                    <td class="material_col" style="background-color: rgb(205, 111, 111);">
+                      {{x.material}}
+                    </td>
+                    {% else %}
+                    <td class="material_col" #style="background-color: lawngreen; color: black;">
+                      {{x.material}}
+                    </td>
+                    {% endif %}
+                    {% if x.invoice_no_field != x.reference %}
+                    <td class="reference_col" style="background-color: rgb(205, 111, 111);">
+                      {{x.reference}}
+                    </td>
+                    {% else %}
+                    <td class="reference_col" #style="background-color: lawngreen; color: black;">
+                      {{x.reference}}
+                    </td>
+                    {% endif %}
+                    {% if x.qty_field != x.mb02_qty_field %}
+                    <td class="mb02_qty_col" style="background-color: rgb(205, 111, 111);">
+                      {{x.mb02_qty_field}}
+                    </td>
+                    {% else %}
+                    <td class="mb02_qty_col" #style="background-color: lawngreen; color: black;">
+                      {{x.mb02_qty_field}}
+                    </td>
+                    {% endif %}
+                    {% if x.inco_terms == "FH" %}
+                    <td class="inco_terms_col" style="background-color: rgb(205, 111, 111);">
+                      {{x.inco_terms}}
+                    </td>
+                    {% else %}
+                    <td class="inco_terms_col">
+                      {{x.inco_terms}}
+                    </td>
+                    {% endif %}
+                    <td class="state_description_col">
+                      {{x.state_description}}
+                    </td>
+                    <td class="weight_part_col">
+                      {{x.weight_part}}
+                    </td>
+                    <td class="rate_col">
+                      {{x.rate}}
+                    </td>
+                    <td class="consider_weight_col">
+                      {{x.consider_weight}}
+                    </td>
+                    <td class="billing_weight_col">
+                      {{x.billing_weight}}
+                    </td>
+                    <td class="consider_value_col">
+                      {{x.consider_value}}
+                    </td>
+                    <td class="billing_value_col">
+                      {{x.billing_value}}
+                    </td>
+                    <td class="bill_no_col">
+                      {{x.bill_no_field}}
+                    </td>
+                    <td class="bill_status_col">
+                      {{x.bill_status}}
+                    </td>
+                    <td class="ses_no_col">
+                      {{x.entry_sheet}}
+                    </td>
+                    <td class="ses_date_col">
+                      {{x.created_on}}
+                    </td>
+                    <td class="2nd_rel_col">
+                      {{x.changed_on}}
+                    </td>
+                    <td class="ses_status_col">
+                      {{x.accin}}
+                    </td>
+                </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <div class="pagination">
+                <span class="step-links">
+                    {% if mis.has_previous %}
+                        <a href="/mis-full?page=1">&laquo; first</a>
+                        <a href="/mis-full?page={{ mis.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ mis.number }} of {{ mis.paginator.num_pages }}.
+                    </span>
+            
+                    {% if mis.has_next %}
+                        <a href="/mis-full?page={{ mis.next_page_number }}">next</a>
+                        <a href="/mis-full?page={{ mis.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script>
+function hide_show_table(col_name)
+    {
+        var checkbox_val=document.getElementById(col_name).value;
+            if(checkbox_val=="hide")
+        {
+            var all_col=document.getElementsByClassName(col_name);
+            for(var i=0;i<all_col.length;i++)
+        {
+            all_col[i].style.display="none";
+        }
+        document.getElementById(col_name+"_head").style.display="none";
+        document.getElementById(col_name).value="show";
+        }
+        else
+        {
+            var all_col=document.getElementsByClassName(col_name);
+            for(var i=0;i<all_col.length;i++)
+        {
+            all_col[i].style.display="table-cell";
+        }
+            document.getElementById(col_name+"_head").style.display="table-cell";
+            document.getElementById(col_name).value="hide";
+          }
+     }
+    
+</script>
+{% endblock javascripts %}

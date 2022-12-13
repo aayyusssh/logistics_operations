@@ -1,0 +1,89 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    .chart-container {
+    width: 500px;
+    height:400px;
+    outline: auto;
+    margin-left: 60px;
+    
+}
+.card-col{
+    column-count: 2;
+    column-gap: 1rem;
+    orphans: 1;
+    widows: 1;
+    display: inline-block;
+}
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="content">
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-chart">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h5 class="card-category">MIS</h5>
+                            <h2 class="card-title">Performance</h2>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card-col">
+                    
+                    <div class="chart-container" >
+                        <canvas id="myChart" width="50px" height="40px"></canvas>
+                    </div>
+                        <div class="chart-container" >
+                            <canvas id="myChart2" width="50px" height="40px"></canvas>
+                        </div>
+                        <br>
+                </div>
+            </div>
+    </div>
+    <div class="card">
+        <div class="container">
+                  </div>
+        <canvas id="myChart3"></canvas>
+    </div>
+     
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+        <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+        <script type="text/javascript">
+            $.get('{% url "line_chart_json" %}', function(data) {
+                var ctx = $("#myChart").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'line', data: data
+                });
+            });
+            $.get('{% url "line_chart2_json" %}', function(data) {
+                var ctx = $("#myChart2").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'line', data: data
+                });
+            });
+            $.get('{% url "line_chart3_json" %}', function(data) {
+                var ctx = $("#myChart3").get(0).getContext("2d");
+                new Chart(ctx, {
+                    type: 'line', data: data
+                });
+            });
+        </script>
+{% endblock javascripts %}

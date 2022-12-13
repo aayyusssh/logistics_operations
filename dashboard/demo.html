@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:margin-right="http://www.w3.org/1999/xhtml" xmlns:padding-bottom="http://www.w3.org/1999/xhtml"
+   xmlns:width="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Telephone Extension Finder</title>
+      <link href = "css/bootstrap.min.css" rel = "stylesheet">
+      <link href = "css/main.css" rel = "stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+   </head>
+   <body>
+      <div id = "tableDiv" class = "tab-pane fade in active">
+         <table  id = "myTable"
+            class= "table-responsive container table table-hover table-bordered table-striped"
+            style="width:35%; margin-right: 15%;">
+            <thead style = "background-color: #800080; color: white;">
+               <th style = "width: 5%">Name</th>
+               <th style = "width: 1.2%">Code</th>
+            </thead>
+            <tfoot>
+               <tr>
+                  <th style = "width: 5%">Name</th>
+                  <th style = "width: 1.2%">Code</th>
+               </tr>
+            </tfoot>
+            <tbody>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Garrett Winters</td>
+                  <td>Accountant</td>
+               </tr>
+               <tr>
+                  <td>Ashton Cox</td>
+                  <td>Junior Technical Author</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <script src = "js/jquery-3.2.1.min.js"></script>
+      <script src = "js/main.js"></script>
+      <script src = "js/impExt.js"></script>
+      <script src="js/confRoom.js"></script>
+      <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+      <script type="text/javascript">
+         $(document).ready(function() {
+            $('#myTable').DataTable();
+         } );
+      </script>
+   </body>
+</html>

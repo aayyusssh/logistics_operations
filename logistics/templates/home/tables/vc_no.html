@@ -1,0 +1,151 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> VC NO </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " border="1">
+              
+                <thead class=" text-primary">
+                  <tr>
+                    <th>
+                      VC No
+                    </th>
+                    <th>
+                      Level
+                    </th>
+                    <th>
+                      Component number
+                    </th>
+                    <th>
+                      Object Description
+                    </th>
+                    <th>
+                      Item Number
+                    </th>
+                    <th>
+                      Component quantity
+                    </th>
+                    <th>
+                      Component unit
+                    </th>
+                    <th>
+                      Change Number
+                    </th>
+                    <th>
+                      Product store loaction
+                    </th>
+                    <th>
+                      BOM number
+                    </th>
+                    <th>
+                      Plant
+                    </th>
+                    <th>
+                      Valid from
+                    </th>
+                    <th>
+                      Valid to
+                    </th>
+                    <th>
+                      Special procurement
+                    </th>
+                    <th>
+                      Bulk material item material
+                    </th>
+                    <th>
+                      VC number description
+                    </th>
+                    <th>
+                      First
+                    </th>
+                    <th>
+                       Second
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in vc_no %}
+                    <td>
+                      {{x.VC_No}}
+                    </td>
+                    <td>
+                      {{x.Level}}
+                    </td>
+                    <td>
+                      {{x.Component_number}}
+                    </td>
+                    <td class ="text-center">
+                      {{x.Object_description}}
+                    </td>
+                    <td>
+                      {{x.Item_Number}}
+                    </td>
+                    <td>
+                      {{x.Component_quantity}}
+                    </td>
+                    <td>
+                      {{x.Component_unit}}
+                    </td>
+                    <td>
+                      {{x.Change_Number}}
+                    </td>
+                    <td>
+                      {{x.Product_store_location}}
+                    </td>
+                    <td>
+                      {{x.BOM_number}}
+                    </td>
+                    <td>
+                      {{x.Plant}}
+                    </td>
+                    <td>
+                      {{x.Valid_from}}
+                    </td>
+                    <td>
+                      {{x.Valid_to}}
+                    </td>
+                    <td>
+                      {{x.Special_procurement}}
+                    </td>
+                    <td>
+                      {{x.Bulk_material_item_material}}
+                    </td>
+                    <td>
+                      {{x.VC_number_description}}
+                    </td>
+                    <td>
+                      {{x.First}}
+                    </td>
+                    <td>
+                      {{x.Second}}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+                
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

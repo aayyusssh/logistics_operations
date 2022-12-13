@@ -1,0 +1,455 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+  .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+  }
+  
+  .pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+  </style>
+     {% endblock stylesheets %}
+
+{% block content %}
+  <div class="content">
+    
+    <div class="card-columns">
+      <div class = "col-md-18">
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container">
+          <!-- .Launch Modal Button-->
+          <button type="button" class="btn btn-primary float-left" data-toggle="modal" data-target="#Mymodal">
+            Upload
+          </button>
+          <!-- .modal -->
+          <div class="modal fade" id="Mymodal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    ×
+                  </button> 
+                  <h4 class="modal-title">
+                    Upload Box
+                  </h4>                                                             
+                </div> 
+                <div class="modal-body">
+                  <form class = "form" method="post" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                  <input class="btn btn-info btn-simple"  name = "excel" title=".xlsx"s type="file">
+                </div>
+                <div class="modal-footer">
+                  <input class="btn btn-success" type="submit" value="Upload without Grn" name="upload"> 
+                  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Mymodal2">
+                    Re Upload with Grn
+                  </button>
+                                           
+                </div>
+              </div>                                                                       
+            </div>                                      
+          </div>
+          <div class="modal fade" id="Mymodal2">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    ×
+                  </button> 
+                  <h4 class="modal-title">
+                    Notification
+                  </h4>                                                             
+                </div> 
+                <div class="modal-body">
+                  Are you sure you want to re upload?
+                </div>   
+                <div class="modal-footer">
+                  <input class="btn btn-success " type="submit" value="Yes" name="re_upload"> 
+                </form>   
+                  <button type="button" class="btn btn-warning" data-dismiss="modal">
+                    Close
+                  </button>                           
+                </div>
+              </div>                                                                       
+            </div>                                      
+          </div>
+        </div>
+        <div class="container">
+          <!-- .Launch Modal Button-->
+          <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#Mymodal3">
+            Download
+          </button>
+        
+          <!-- .modal -->
+          <div class="modal fade" id="Mymodal3">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    ×
+                  </button> 
+                  <h4 class="modal-title">
+                    Notification
+                  </h4>                                                             
+                </div> 
+                <div class="modal-body">
+                  Are you sure you want to download?
+                </div>   
+                <div class="modal-footer">
+                  <form action="{% url 'download' %}" method="post">
+                    {% csrf_token %}
+                     <button type="submit" class="btn btn-warning btn-simple" name="data" value="MIS">Download results in Excel</button>
+                     </form>
+                  <button type="button" class="btn btn-warning" data-dismiss="modal">
+                    Close
+                  </button>                                
+                </div>
+              </div>                                                                       
+            </div>                                      
+          </div>
+        </div>
+      {% if messages %}
+<div class="alert">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</div>
+{% endif %}
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> MIS </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="data" class="table tablesorter " border="1">
+              
+                <thead class=" text-primary">
+                    <!--<th>
+                      Activity (from manual-Vinsum MIS)
+                    </th>
+                    <th>
+                      PAYMENT TYPE (from master)
+                    </th>
+                    <th>
+                      LR no.
+                    </th>
+                    <th>
+                      LR dt.
+                    </th>
+                    <th>
+                      Consignor
+                    </th>
+                    <th>
+                      Consignee
+                    </th>
+                    <th>
+                      Consignor Loaction
+                    </th>
+                    <th>
+                      Location Code
+                    </th>
+                    <th>
+                      State
+                    </th>
+                    <th>
+                      Activity Status
+                    </th>
+                    <th>
+                      Location
+                    </th>
+                    <th>
+                      Delivery Date
+                    </th>
+                    <th>
+                      Grn Number
+                    </th>
+                    <th>
+                      Invoice No.
+                    </th>
+                    <th>
+                      Invoice Date
+                    </th>
+                    <th>
+                      Vendor PO No
+                    </th>
+                    <th>
+                      Part No.
+                    </th>
+                    <th>
+                      PKG
+                    </th>
+                    <th>
+                      PKG TYPE
+                    </th>
+                    <th>
+                      Qty.
+                    </th>
+                    <th>
+                      Actual Wt. (KG)
+                    </th>
+                    <th>
+                      LSP Name
+                    </th>
+                    <th>
+                      Inco-Terms
+                    </th>
+                    <th>
+                      GRN Part No
+                    </th>
+                    <th>
+                      GRN Invoice No
+                    </th>
+                    <th>
+                      MB02 Qty.
+                    </th>
+                    <th>
+                      Remark
+                    </th>
+                    <th>
+                      Weight/Part
+                    </th>
+                    <th>
+                      Consider Weight
+                    </th>
+                    <th>
+                      Rate
+                    </th>
+                    <th>
+                      Amount
+                    </th>
+                    <th>
+                      Bill No.
+                    </th>
+                    <th>
+                      Bill Date
+                    </th>
+                    <th>
+                      SES No.
+                    </th>
+                    <th>
+                      SES Dt.
+                    </th>
+                    <th>
+                      2nd Rel. Dt.
+                    </th>
+                    <th>
+                      SES Status
+                    </th>
+                    <th>
+                      SVPS Status (27th Dec-21)
+                    </th>-->
+                    
+                    <tr>
+                      {% for x in col %}
+                    <td>
+                      {{x}}
+                    </td>
+                    {% endfor %}
+                    <!--
+                    {% for y in grncol %}
+                    <td>
+                      {{y}}
+                    </td>
+                    {% endfor %}
+                    -->
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in mis %}
+                    
+                    <td>
+                      {{x.transportername}}
+                    </td>
+                    <td>
+                      {{x.activity_frommanual_vinsummis_field}}
+                    </td>
+                    <td>
+                      {{x.paymenttype_frommaster_field}}
+                    </td>
+                    <td>
+                      {{x.activitystatus}}
+                    </td>
+                    <td>
+                      {{x.location}}
+                    </td>
+                    <td class ="text-center">
+                      {{x.deliverydate}}
+                    </td>
+                    <td>
+                      {{x.grnnumber}}
+                    </td>
+                    <td>
+                      <a href="update/{{x.lrno_field}}">{{x.lrno_field}}</a>
+                    </td>
+                    <td>
+                      {{x.lrdt_field}}
+                    </td>
+                    <td>
+                      {{x.lrtime}}
+                    </td>
+                    <td>
+                      {{x.consignor}}
+                    </td>
+                    <td>
+                      {{x.consignee}}
+                    </td>
+                    <td>
+                      {{x.consignorlocation}}
+                    </td>
+                    <td>
+                      {{x.locationcode}}
+                    </td>
+                    <td>
+                      {{x.state}}
+                    </td>
+                    <td>
+                      {{x.invoiceno_field}}
+                    </td>
+                    <td>
+                      {{x.invoicedate}}
+                    </td>
+                    <td>
+                      {{x.vendorpono}}
+                    </td>
+                    <td>
+                      {{x.partno_field}}
+                    </td>
+                    <td>
+                      {{x.pkg}}
+                    </td>
+                    <td>
+                      {{x.pkgtype}}
+                    </td>
+                    <td>
+                      {{x.qty_field}}
+                    </td>
+                    <td>
+                      {{x.actualwt_kg_field}}
+                    </td>
+                    <!--
+                      {{x.grninvoiceno}}
+                    {% for y in grn %}
+                  {% if x.grnnumber == y.materialdocument %}
+                    
+                    <td>
+                      {{y.materialdocument}}
+                    </td>
+                    {% if x.partno_field != y.material %}
+                    <td style="background-color: red;">
+                      {{y.material}}
+                    </td>
+                    {% else %}
+                    <td>
+                      {{y.material}}
+                    </td>
+                    {% endif %}
+                    <td>
+                      {{y.materialdescription}}
+                    </td>
+                    {% if x.invoiceno_field != y.reference %}
+                    <td style="background-color: red;">
+                      {{y.reference}}
+                    </td>
+                    {% else %}
+                    <td>
+                      {{y.reference}}
+                    </td>
+                    {% endif %}
+                    <td>
+                      {{y.inv_dt_field}}
+                    </td>
+                    {% if x.qty_field != y.grqty_field %}
+                    <td style="background-color: red;">
+                      {{y.grqty_field}}
+                    </td>
+                    {% else %}
+                    <td>
+                      {{y.grqty_field}}
+                    </td>
+                    {% endif %}
+                    <td>
+                      {{y.mb02qty_field}}
+                    </td>
+                    <td>
+                      {{y.mov}}
+                    </td>
+                    <td>
+                      {{y.strloc_field}}
+                    </td>
+                    <td>
+                      {{y.leci}}
+                    </td>
+                    <td>
+                      {{y.purchaseorder}}
+                    </td>
+                    <td>
+                      {{y.vendor}}
+                    </td>
+                    <td>
+                      {{y.postingdate}}
+                    </td>
+                    <td>
+                      {{y.plant}}
+                    </td>
+                    <td>
+                      {{y.grnamount}}
+                    </td>
+                    <td>
+                      {{y.vendorname}}
+                    </td>
+                    
+                    
+                    {% endif %}
+                    {% endfor %}
+                  
+                  -->
+                </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              <div class="pagination">
+                <span class="step-links">
+                    {% if mis.has_previous %}
+                        <a href="/tables/mis?page=1">&laquo; first</a>
+                        <a href="/tables/mis?page={{ mis.previous_page_number }}">previous</a>
+                    {% endif %}
+            
+                    <span class="current">
+                        Page {{ mis.number }} of {{ mis.paginator.num_pages }}.
+                    </span>
+            
+                    {% if mis.has_next %}
+                        <a href="/tables/mis?page={{ mis.next_page_number }}">next</a>
+                        <a href="/tables/mis?page={{ mis.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

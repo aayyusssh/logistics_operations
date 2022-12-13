@@ -1,0 +1,228 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+  <div class="content">
+    <div class="card-columns">
+      <div class = "col-md-18">
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card ">
+          <div class="card-header">
+            <h4 class="card-title"> MIS </h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table tablesorter " border="1">
+              
+                <thead class=" text-primary">
+                    <!--<th>
+                      Activity (from manual-Vinsum MIS)
+                    </th>
+                    <th>
+                      PAYMENT TYPE (from master)
+                    </th>
+                    <th>
+                      LR no.
+                    </th>
+                    <th>
+                      LR dt.
+                    </th>
+                    <th>
+                      Consignor
+                    </th>
+                    <th>
+                      Consignee
+                    </th>
+                    <th>
+                      Consignor Loaction
+                    </th>
+                    <th>
+                      Location Code
+                    </th>
+                    <th>
+                      State
+                    </th>
+                    <th>
+                      Activity Status
+                    </th>
+                    <th>
+                      Location
+                    </th>
+                    <th>
+                      Delivery Date
+                    </th>
+                    <th>
+                      Grn Number
+                    </th>
+                    <th>
+                      Invoice No.
+                    </th>
+                    <th>
+                      Invoice Date
+                    </th>
+                    <th>
+                      Vendor PO No
+                    </th>
+                    <th>
+                      Part No.
+                    </th>
+                    <th>
+                      PKG
+                    </th>
+                    <th>
+                      PKG TYPE
+                    </th>
+                    <th>
+                      Qty.
+                    </th>
+                    <th>
+                      Actual Wt. (KG)
+                    </th>
+                    <th>
+                      LSP Name
+                    </th>
+                    <th>
+                      Inco-Terms
+                    </th>
+                    <th>
+                      GRN Part No
+                    </th>
+                    <th>
+                      GRN Invoice No
+                    </th>
+                    <th>
+                      MB02 Qty.
+                    </th>
+                    <th>
+                      Remark
+                    </th>
+                    <th>
+                      Weight/Part
+                    </th>
+                    <th>
+                      Consider Weight
+                    </th>
+                    <th>
+                      Rate
+                    </th>
+                    <th>
+                      Amount
+                    </th>
+                    <th>
+                      Bill No.
+                    </th>
+                    <th>
+                      Bill Date
+                    </th>
+                    <th>
+                      SES No.
+                    </th>
+                    <th>
+                      SES Dt.
+                    </th>
+                    <th>
+                      2nd Rel. Dt.
+                    </th>
+                    <th>
+                      SES Status
+                    </th>
+                    <th>
+                      SVPS Status (27th Dec-21)
+                    </th>-->
+                    
+                    <tr>
+                      {% for x in col %}
+                    <td>
+                      {{x}}
+                    </td>
+                    {% endfor %}
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    {% for x in lec %}
+                    <td>
+                      {{x.lecino}}
+                    </td>
+                    <td>
+                      {{x.rfidno}}
+                    </td>
+                    <td>
+                      {{x.checkpoint}}
+                    </td>
+                    <td>
+                      {{x.chkindate}}
+                    </td>
+                    <td>
+                      {{x.chktime}}
+                    </td>
+                    <td class ="text-center">
+                      {{x.trucks_carslicenseplateno_field}}
+                    </td>
+                    <td>
+                      {{x.firstname}}
+                    </td>
+                    <td>
+                      {{x.lastname}}
+                    </td>
+                    <td>
+                      {{x.no}}
+                    </td>
+                    <td>
+                      {{x.ri}}
+                    </td>
+                    <td>
+                      {{x.reldate}}
+                    </td>
+                    <td>
+                      {{x.reltime}}
+                    </td>
+                    <td>
+                      {{x.releaseby}}
+                    </td>
+                    <td>
+                      {{x.outdate}}
+                    </td>
+                    <td>
+                      {{x.outtime}}
+                    </td>
+                    <td>
+                      {{x.outby}}
+                    </td>
+                    <td>
+                      {{x.tat_hrs_field}}
+                    </td>
+                    <td>
+                      {{x.weight}}
+                    </td>
+                    <td>
+                      {{x.textforloading}}
+                    </td>
+                    <td>
+                      {{x.lspname}}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
